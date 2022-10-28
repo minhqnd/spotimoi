@@ -637,7 +637,7 @@ function nextVideo() {
 
   function swapUpDOMListVid(clickedPos, clickedList) {
     //! phải thay đổi từng element không bị dính onclick khi swap html
-    if (clickedPos !== 0) {
+    
       var tempArtist = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text() // artist 1
       var tempTitle = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text() // title 1
       var tempDuration = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text() // duration
@@ -657,13 +657,13 @@ function nextVideo() {
       $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text(tempPreTitle)
       $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text(tempPreDuration)
       $('.' + clickedList).children().eq(clickedPos).children('img').attr('src', tempPreImg)
-    }
+    
 
   }
 
 
   function swapDownDOMListVid(clickedPos, clickedList) {
-    if (clickedPos !== $('.' + clickedList).children().length - 1) {
+    
       console.log(clickedList);
       var tempArtist = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text() // artist 1
       var tempTitle = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text() // title 1
@@ -685,7 +685,6 @@ function nextVideo() {
       $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text(tempPreTitle)
       $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text(tempPreDuration)
       $('.' + clickedList).children().eq(clickedPos).children('img').attr('src', tempPreImg)
-    }
 
   }
 
@@ -697,20 +696,30 @@ function nextVideo() {
 
   function changePosUp(data) {
     //get postion of div clicked
+    // $(data).parent().parent().parent().hasClass('active')
     var clickedPos = $(data).parent().parent().parent().index()
-    var clickedList = $(data).parent().parent().parent().parent().attr('class')
+    if (clickedPos !== 0) {
+    var clickedList = $(data).parent().parent().parent().parent().attr('class')    
     swapUpDOMListVid(clickedPos, clickedList)
     swapArrayListVid(clickedPos, clickedPos - 1)
-
+      if ($(data).parent().parent().parent().hasClass('active')) {
+        posVid--
+      }
+    }
   }
 
   function changePosDown(data) {
-    var posVid = posVid + 1
+    // var posVid = posVid + 1
     //get postion of div clicked
     var clickedPos = $(data).parent().parent().parent().index()
+    if (clickedPos !== $('.' + clickedList).children().length - 1) {
     var clickedList = $(data).parent().parent().parent().parent().attr('class')
     swapDownDOMListVid(clickedPos, clickedList)
     swapArrayListVid(clickedPos, clickedPos + 1)
+      if ($(data).parent().parent().parent().hasClass('active')) {
+        posVid++
+      }
+    }
   }
 
   //* Space button to start stop song
