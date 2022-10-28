@@ -6,6 +6,8 @@ html {
   height: 100%;
 }
 
+/* TODO make footer nav */
+
 body {
   height: 100%;
   margin: 0;
@@ -35,7 +37,8 @@ body {
 .music-player-container .music-player-content main {
   display: flex;
   flex-grow: 1;
-  height: 90%
+  height: 90%;
+  margin-bottom: 80px;
 }
 
 .music-player-container .music-player-content main .music-player-sidebar {
@@ -57,7 +60,7 @@ body {
   }
 
   .current-playing-song-controls .song-name {
-    /* display: none !important; */
+    display: none !important;
   }
 
   .current-playing-song-controls .volume-controls {
@@ -620,8 +623,9 @@ a {
 }
 
 .music-player-container .music-player-content .music-player {
-  position: relative;
+  position: fixed;
   height: 80px;
+  bottom: 0;
   width: 100%;
   flex-shrink: 0;
   background-color: #181818;
