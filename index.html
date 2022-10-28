@@ -76,8 +76,7 @@
                 <span class="wave"></span>
                 <span class="wave"></span>
               </div>
-              <img class="img-responsive" id="album-cover-image"
-                src="./img/nullImage.jpg" />
+              <img class="img-responsive" id="album-cover-image" src="./img/nullImage.jpg" />
               <div class="overlay"></div>
             </div>
           </div>
@@ -87,9 +86,9 @@
             <div class="search-form-container">
               <form role="search" id="form" action="javascript:getIdVideoBySearch($('#search').val())">
                 <div class="autocomplete" style="width:100%;">
-                <input type="search" id="search" name="q" placeholder="Tìm kiếm..." autocomplete="off" />
-                <div id="autocomplete-list" class="autocomplete-items"></div>
-              </div>
+                  <input type="search" id="search" name="q" placeholder="Tìm kiếm..." autocomplete="off" />
+                  <div id="autocomplete-list" class="autocomplete-items"></div>
+                </div>
                 <button>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7" <g class="search-path" fill="none"
                     stroke="#848F91">
@@ -144,41 +143,37 @@
                 <!-- <div class="tab active">Lyrics</div>
                 <div class="tab">Related</div> -->
               </div>
-              <div class="song-list scrollbar">
-                <div class="song-list-user"></div>
-                <div class="song-list-default">
-                  <div class="song-list-item loading">
-                    <img src='./img/nullImage.jpg' class="thumbnail" loading="lazy">
-                    <div class="song-info">
-                      <div class="song-name">
-                        <h3>Loading...</h3>
-                        <p>Loading...</p>
-                      </div>
-                      <div class="song-duration">
-                        <button onclick="changePosUp(this)" class="cursorup">
-                          <svg width="32px" height="32px" viewBox="0 0 490 490" xmlns="http://www.w3.org/2000/svg">
-                            <use xlink:href="#upsvg"></use>
-                          </svg>
-                        </button>
-                        <button onclick="changePosDown(this)" class="cursordown">
-                          <svg width="32px" height="32px" viewBox="0 0 490 490" xmlns="http://www.w3.org/2000/svg">
-                            <use xlink:href="#downsvg"></use>
-                          </svg>
-                        </button>
-                        <button onclick="deleteSong(this)" class="cursordel">
-                          <svg width="32px" height="32px" xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 30 30">
-                            <use xlink:href="#deletesvg"></use>
-                          </svg>
-                        </button>
-                        <span>Loading...</span>
-                      </div>
+              <div class="song-list">
+                <div class="song-list-item loading">
+                  <img src='./img/nullImage.jpg' class="thumbnail" loading="lazy">
+                  <div class="song-info">
+                    <div class="song-name">
+                      <h3>Loading...</h3>
+                      <p>Loading...</p>
+                    </div>
+                    <div class="song-duration">
+                      <button onclick="changePosUp(this)" class="cursorup">
+                        <svg width="32px" height="32px" viewBox="0 0 490 490" xmlns="http://www.w3.org/2000/svg">
+                          <use xlink:href="#upsvg"></use>
+                        </svg>
+                      </button>
+                      <button onclick="changePosDown(this)" class="cursordown">
+                        <svg width="32px" height="32px" viewBox="0 0 490 490" xmlns="http://www.w3.org/2000/svg">
+                          <use xlink:href="#downsvg"></use>
+                        </svg>
+                      </button>
+                      <button onclick="deleteSong(this)" class="cursordel">
+                        <svg width="32px" height="32px" xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 30 30">
+                          <use xlink:href="#deletesvg"></use>
+                        </svg>
+                      </button>
+                      <span>Loading...</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </main>
       <div class="music-player">
         <!-- <div class="current-playing-time"></div> -->
@@ -276,9 +271,9 @@
         <path stroke="null" fill="#ff2152"
           d="m764.15997,213.33333l-512,0l55.46667,-55.03999a42.66667,42.66667 0 0 0 -60.58669,-60.58668l-128,128.00001a42.66667,42.66667 0 0 0 0,60.58667l128,128a42.66667,42.66667 0 0 0 60.58669,0a42.66667,42.66667 0 0 0 0,-60.58667l-55.46664,-55.04001l511.99997,0a66.56,66.56 0 0 1 67.84003,65.28l0,105.38669a42.66667,42.66667 0 0 0 85.33331,0l0,-105.38669a151.89333,151.89333 0 0 0 -153.17334,-150.61331l0,-0.00002zm12.80005,396.37334a42.66667,42.66667 0 0 0 -60.58667,60.58667l55.46667,55.03998l-512,0a66.56,66.56 0 0 1 -67.84,-65.27997l0,-105.38666a42.66667,42.66667 0 0 0 -85.33335,0l0,105.38666a151.89333,151.89333 0 0 0 153.17332,150.61334l511.99997,0l-55.46667,55.03998a42.66667,42.66667 0 0 0 0,60.58667a42.66667,42.66667 0 0 0 60.58667,0l128,-128a42.66667,42.66667 0 0 0 0,-60.58667l-128,-128l0.00006,0z"
           id="svg_1" />
-        <text font-weight="bold" stroke="#ff2152" transform="matrix(2.59629 0 0 2.10915 -712.776 -259.055)" xml:space="preserve"
-          text-anchor="start" font-family="'Glory'" font-size="250" id="svg_2" y="452.40729" x="421.8913" stroke-width="0"
-          fill="#ff2152">1</text>
+        <text font-weight="bold" stroke="#ff2152" transform="matrix(2.59629 0 0 2.10915 -712.776 -259.055)"
+          xml:space="preserve" text-anchor="start" font-family="'Glory'" font-size="250" id="svg_2" y="452.40729"
+          x="421.8913" stroke-width="0" fill="#ff2152">1</text>
       </symbol>
       <symbol id="upsvg">
         <path

@@ -17,7 +17,7 @@ body {
 
 .music-player-container {
   position: absolute;
-    height: 100vh;
+  height: 100vh;
   width: 100%;
   /* margin: 80px auto; */
 }
@@ -45,6 +45,24 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #000000;
+}
+
+@media only screen and (max-width: 600px) {
+  .music-player-container .music-player-content main .music-player-sidebar {
+    display: none;
+  }
+
+  .music-player-container .music-player-content main .music-player-main .current-select-category-container .current-select-category-content .song-list .song-list-item .song-duration {
+    display: none !important;
+  }
+
+  .current-playing-song-controls .song-name {
+    /* display: none !important; */
+  }
+
+  .current-playing-song-controls .volume-controls {
+    display: none !important;
+  }
 }
 
 .music-player-container .music-player-content main .music-player-sidebar .category {
