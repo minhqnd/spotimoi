@@ -733,6 +733,7 @@ function nextVideo() {
   spaceKeyDown()
 
   //TODO nếu như còn bài cuối thì remove hết
+  //TODO error with postvid when remove vid
   function deleteSong(data) {
     var clickedPos = $(data).parent().parent().parent().index()
     console.log(clickedPos);
@@ -758,6 +759,3 @@ function nextVideo() {
   }
 
 //TODO fix onclick when search
-
-
-//TODO fix posVid
