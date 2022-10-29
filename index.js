@@ -413,7 +413,7 @@ function nextSong() {
   $("#album-cover-image").attr("src", `https://i3.ytimg.com/vi/${id}/mqdefault.jpg`);
   showActiveSong()
   playButton(true);
-  }
+}
 
 function playMusicById(id) {
   player.loadVideoById(id);
@@ -441,321 +441,321 @@ function nextVideo() {
 
   }
 }
-  function shuffle() {
-    if (!shuffleStatus) {
-      $('.shuffleBtn').attr("xlink:href", "#shuffle-active");
-      shuffleStatus = true;
+function shuffle() {
+  if (!shuffleStatus) {
+    $('.shuffleBtn').attr("xlink:href", "#shuffle-active");
+    shuffleStatus = true;
+  } else {
+    $('.shuffleBtn').attr("xlink:href", "#shuffle");
+    shuffleStatus = false;
+  }
+}
+
+//Repeat
+function loopVideo() {
+  if (loopStatus == 0) {
+    $('#loopBtn').attr("xlink:href", "#loop-active");
+    loopStatus = 1;
+  } else if (loopStatus == 1) {
+    $('#loopBtn').attr("xlink:href", "#loop-active-song");
+    loopStatus = 2;
+  }
+  else {
+    $('#loopBtn').attr("xlink:href", "#loop");
+    loopStatus = 0;
+  }
+}
+
+//Check private or deleted video
+function checkPrivate() {
+  if (listVid[posVid].title == "Private video" || listVid[posVid].title == "Deleted video") {
+    if (posVid == listVid.length - 1) {
+      posVid = 0;
     } else {
-      $('.shuffleBtn').attr("xlink:href", "#shuffle");
-      shuffleStatus = false;
+      posVid += 1;
     }
+    checkPrivate();
+  }
+};
+
+function checkPrivateBack() {
+  if (listVid[posVid].title == "Private video" || listVid[posVid].title == "Deleted video") {
+    if (posVid == 0) {
+      posVid = listVid.length - 1;
+    } else {
+      posVid -= 1;
+    }
+    checkPrivateBack();
+  }
+};
+
+//on New Playlist
+function changePlaylistId() {
+  var newId = newPlaylistId.value;
+  if (newId == "") {
+    return;
   }
 
-  //Repeat
-  function loopVideo() {
-    if (loopStatus == 0) {
-      $('#loopBtn').attr("xlink:href", "#loop-active");
-      loopStatus = 1;
-    } else if (loopStatus == 1) {
-      $('#loopBtn').attr("xlink:href", "#loop-active-song");
-      loopStatus = 2;
-    }
-    else {
-      $('#loopBtn').attr("xlink:href", "#loop");
-      loopStatus = 0;
-    }
-  }
+  listVid = [];
+  btn.style.display = "none";
+  prev.style.display = "none";
+  next.style.display = "none";
+  btn2.style.display = "none";
+  repeat.style.display = "none";
+  $('#song-title').text("Loading...");
 
-  //Check private or deleted video
-  function checkPrivate() {
-    if (listVid[posVid].title == "Private video" || listVid[posVid].title == "Deleted video") {
-      if (posVid == listVid.length - 1) {
-        posVid = 0;
-      } else {
-        posVid += 1;
-      }
-      checkPrivate();
-    }
-  };
-
-  function checkPrivateBack() {
-    if (listVid[posVid].title == "Private video" || listVid[posVid].title == "Deleted video") {
-      if (posVid == 0) {
-        posVid = listVid.length - 1;
-      } else {
-        posVid -= 1;
-      }
-      checkPrivateBack();
-    }
-  };
-
-  //on New Playlist
-  function changePlaylistId() {
-    var newId = newPlaylistId.value;
-    if (newId == "") {
-      return;
-    }
-
-    listVid = [];
-    btn.style.display = "none";
-    prev.style.display = "none";
-    next.style.display = "none";
-    btn2.style.display = "none";
-    repeat.style.display = "none";
-    $('#song-title').text("Loading...");
-
-    getPlayListItems(newId)
-      .then(data => {
-        data.forEach(item => {
-          item.items.forEach(i => listVid.push({ title: i.snippet.title, idVid: i.snippet.resourceId.videoId }));
-        });
-        posVid = 0
-        checkPrivate();
-        btn.show()
-        prev.show()
-        next.show()
-        btn2.show()
-        repeat.show()
-        $('#song-title').text(listVid[posVid].title);
-        player.loadVideoById({ videoId: listVid[posVid].idVid });
-        playButton(true);
+  getPlayListItems(newId)
+    .then(data => {
+      data.forEach(item => {
+        item.items.forEach(i => listVid.push({ title: i.snippet.title, idVid: i.snippet.resourceId.videoId }));
       });
+      posVid = 0
+      checkPrivate();
+      btn.show()
+      prev.show()
+      next.show()
+      btn2.show()
+      repeat.show()
+      $('#song-title').text(listVid[posVid].title);
+      player.loadVideoById({ videoId: listVid[posVid].idVid });
+      playButton(true);
+    });
 
-  }
+}
 
 
-  //* AUTO complete
+//* AUTO complete
 
-  function renderSuggest(item) {
-    $('#search').val().length
-    return `<div class="suggestItem"><strong>${item.slice(0, $('#search').val().length)}</strong>${item.slice($('#search').val().length)}<input type="hidden" value="${item}"></div>`
-  }
+function renderSuggest(item) {
+  $('#search').val().length
+  return `<div class="suggestItem"><strong>${item.slice(0, $('#search').val().length)}</strong>${item.slice($('#search').val().length)}<input type="hidden" value="${item}"></div>`
+}
 
 
-  // $("#search").input(function () {
-  //   getSearchSuggest(this.val)
-  // });
+// $("#search").input(function () {
+//   getSearchSuggest(this.val)
+// });
 
-  $('#search').on('input', function (e) {
-    $('#search').val() ? getSearchSuggest($('#search').val()) : $('.suggestItem').remove()
+$('#search').on('input', function (e) {
+  $('#search').val() ? getSearchSuggest($('#search').val()) : $('.suggestItem').remove()
 
+});
+
+$('#search').on('click', function (e) {
+  document.onkeydown = null
+});
+
+function getListSuggest(data) {
+  var ListSuggest = JSON.parse(data)[1]
+  autocomplete(document.getElementById("search"), ListSuggest);
+}
+
+function autocomplete(inp, arr) {
+  $('.suggestItem').remove()
+  arr.forEach(item => {
+    $('#autocomplete-list').append(renderSuggest(item))
+  })
+  var currentFocus;
+  currentFocus = -1;
+
+  inp.addEventListener("keydown", function (e) {
+    if (e.keyCode == 40) {
+      currentFocus++;
+      addActive(currentFocus);
+    } else if (e.keyCode == 38) {
+      currentFocus--;
+      addActive(currentFocus);
+    }
   });
 
-  $('#search').on('click', function (e) {
-    document.onkeydown = null
+  $(".suggestItem").click(function () {
+    $('#search').val($(this).text())
+    $('#search').focus()
+    currentFocus = -1
   });
 
-  function getListSuggest(data) {
-    var ListSuggest = JSON.parse(data)[1]
-    autocomplete(document.getElementById("search"), ListSuggest);
+  function addActive(x) {
+    removeActive()
+    $('#search').val($(".suggestItem").eq(x).text())
+    $(".suggestItem").eq(x).addClass('autocomplete-active');
   }
 
-  function autocomplete(inp, arr) {
+  function removeActive(x) {
+    $(".suggestItem").removeClass('autocomplete-active');
+  }
+
+  /*execute a function when someone clicks in the document:*/
+  document.addEventListener("click", function (e) {
     $('.suggestItem').remove()
-    arr.forEach(item => {
-      $('#autocomplete-list').append(renderSuggest(item))
+    spaceKeyDown()
+  });
+}
+
+function addVideoBySearch(id) {
+  $('.suggestItem').remove()
+  console.log(id)
+  getVideoItems(id).then(data => {
+    data.data.items.forEach((i, index) => {
+      var title = i.snippet.title
+      var artist = i.snippet.channelTitle
+      var duration = YTDurationToSeconds(i.contentDetails.duration)
+      listVid.unshift({ title: title, idVid: id, artist: artist, duration: duration })
+      $('.song-list').append(renderItem(title, artist, id, duration))
+      //TODO: scroll to this song
+      showActiveSong()
+      setOnClickSong()
     })
-    var currentFocus;
-    currentFocus = -1;
+  }).catch(err => {
+    console.log(err)
+  });
+}
 
-    inp.addEventListener("keydown", function (e) {
-      if (e.keyCode == 40) {
-        currentFocus++;
-        addActive(currentFocus);
-      } else if (e.keyCode == 38) {
-        currentFocus--;
-        addActive(currentFocus);
-      }
-    });
+//* onclick on someone song
+function setOnClickSong() {
+  $(".song-list-item").prop("onclick", null).off("click");
+  $(".song-list-item").on("click", function () {
+    var songTitle = $(this).children('div').children('div').children('h3').text()
+    posVid = $(this).index()
+    // console.log(listVid.find(({ title }) => title === songTitle))
+    playByClick(listVid.find(({ title }) => title === songTitle))
+  });
+  $('.song-duration').on('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+}
 
-    $(".suggestItem").click(function () {
-      $('#search').val($(this).text())
-      $('#search').focus()
-      currentFocus = -1
-    });
+function playByClick(data) {
+  playMusicById(data.idVid)
+  $('#song-title').text(data.title);
+  $('#song-artist').text(data.artist)
+  $("#album-cover-image").attr("src", `https://i3.ytimg.com/vi/${data.idVid}/mqdefault.jpg`);
+  showActiveSong()
+  setOnClickSong()
+  playButton(true);
+}
 
-    function addActive(x) {
-      removeActive()
-      $('#search').val($(".suggestItem").eq(x).text())
-      $(".suggestItem").eq(x).addClass('autocomplete-active');
-    }
+function swapUpDOMListVid(clickedPos, clickedList) {
+  //! phải thay đổi từng element không bị dính onclick khi swap html
 
-    function removeActive(x) {
-      $(".suggestItem").removeClass('autocomplete-active');
-    }
+  var tempArtist = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text() // artist 1
+  var tempTitle = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text() // title 1
+  var tempDuration = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text() // duration
+  var tempImg = $('.' + clickedList).children().eq(clickedPos).children('img').attr('src') //source 2
 
-    /*execute a function when someone clicks in the document:*/
-    document.addEventListener("click", function (e) {
-      $('.suggestItem').remove()
-      spaceKeyDown()
-    });
-  }
+  var tempPreArtist = $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('p').text() // artist 2
+  var tempPreTitle = $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('h3').text() // title 2
+  var tempPreDuration = $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('span').text() // duration 2
+  var tempPreImg = $('.' + clickedList).children().eq(clickedPos - 1).children('img').attr('src')
 
-  function addVideoBySearch(id) {
-    $('.suggestItem').remove()
-    console.log(id)
-    getVideoItems(id).then(data => {
-      data.data.items.forEach((i, index) => {
-        var title = i.snippet.title
-        var artist = i.snippet.channelTitle
-        var duration = YTDurationToSeconds(i.contentDetails.duration)
-        listVid.unshift({ title: title, idVid: id, artist: artist, duration: duration })
-        $('.song-list').append(renderItem(title, artist, id, duration))
-        //TODO: scroll to this song
-        showActiveSong()
-        setOnClickSong()
-      })
-    }).catch(err => {
-      console.log(err)
-    });
-  }
+  $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('p').text(tempArtist)
+  $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('h3').text(tempTitle)
+  $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('span').text(tempDuration)
+  $('.' + clickedList).children().eq(clickedPos - 1).children('img').attr('src', tempImg)
 
-  //* onclick on someone song
-  function setOnClickSong() {
-    $(".song-list-item").prop("onclick", null).off("click");
-    $(".song-list-item").on("click", function () {
-      var songTitle = $(this).children('div').children('div').children('h3').text()
-      posVid = $(this).index()
-      // console.log(listVid.find(({ title }) => title === songTitle))
-      playByClick(listVid.find(({ title }) => title === songTitle))
-    });
-    $('.song-duration').on('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    });
-  }
-
-  function playByClick(data) {
-    playMusicById(data.idVid)
-    $('#song-title').text(data.title);
-    $('#song-artist').text(data.artist)
-    $("#album-cover-image").attr("src", `https://i3.ytimg.com/vi/${data.idVid}/mqdefault.jpg`);
-    showActiveSong()
-    setOnClickSong()
-    playButton(true);
-  }
-
-  function swapUpDOMListVid(clickedPos, clickedList) {
-    //! phải thay đổi từng element không bị dính onclick khi swap html
-    
-      var tempArtist = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text() // artist 1
-      var tempTitle = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text() // title 1
-      var tempDuration = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text() // duration
-      var tempImg = $('.' + clickedList).children().eq(clickedPos).children('img').attr('src') //source 2
-
-      var tempPreArtist = $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('p').text() // artist 2
-      var tempPreTitle = $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('h3').text() // title 2
-      var tempPreDuration = $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('span').text() // duration 2
-      var tempPreImg = $('.' + clickedList).children().eq(clickedPos - 1).children('img').attr('src')
-
-      $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('p').text(tempArtist)
-      $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('h3').text(tempTitle)
-      $('.' + clickedList).children().eq(clickedPos - 1).children('div').children('div').children('span').text(tempDuration)
-      $('.' + clickedList).children().eq(clickedPos - 1).children('img').attr('src', tempImg)
-
-      $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text(tempPreArtist)
-      $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text(tempPreTitle)
-      $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text(tempPreDuration)
-      $('.' + clickedList).children().eq(clickedPos).children('img').attr('src', tempPreImg)
-    
-
-  }
+  $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text(tempPreArtist)
+  $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text(tempPreTitle)
+  $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text(tempPreDuration)
+  $('.' + clickedList).children().eq(clickedPos).children('img').attr('src', tempPreImg)
 
 
-  function swapDownDOMListVid(clickedPos, clickedList) {
-    
-      console.log(clickedList);
-      var tempArtist = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text() // artist 1
-      var tempTitle = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text() // title 1
-      var tempDuration = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text() // duration
-      var tempImg = $('.' + clickedList).children().eq(clickedPos).children('img').attr('src') //source 2
+}
 
-      var tempPreArtist = $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('p').text() // artist 2
-      var tempPreTitle = $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('h3').text() // title 2
-      var tempPreDuration = $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('span').text() // duration 2
-      var tempPreImg = $('.' + clickedList).children().eq(clickedPos + 1).children('img').attr('src')
 
-      console.log(tempTitle);
-      $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('p').text(tempArtist)
-      $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('h3').text(tempTitle)
-      $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('span').text(tempDuration)
-      $('.' + clickedList).children().eq(clickedPos + 1).children('img').attr('src', tempImg)
+function swapDownDOMListVid(clickedPos, clickedList) {
 
-      $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text(tempPreArtist)
-      $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text(tempPreTitle)
-      $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text(tempPreDuration)
-      $('.' + clickedList).children().eq(clickedPos).children('img').attr('src', tempPreImg)
+  console.log(clickedList);
+  var tempArtist = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text() // artist 1
+  var tempTitle = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text() // title 1
+  var tempDuration = $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text() // duration
+  var tempImg = $('.' + clickedList).children().eq(clickedPos).children('img').attr('src') //source 2
 
-  }
+  var tempPreArtist = $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('p').text() // artist 2
+  var tempPreTitle = $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('h3').text() // title 2
+  var tempPreDuration = $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('span').text() // duration 2
+  var tempPreImg = $('.' + clickedList).children().eq(clickedPos + 1).children('img').attr('src')
 
-  function swapArrayListVid(a, b) {
-    var temp = listVid[a];
-    listVid[a] = listVid[b];
-    listVid[b] = temp;
-  };
+  console.log(tempTitle);
+  $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('p').text(tempArtist)
+  $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('h3').text(tempTitle)
+  $('.' + clickedList).children().eq(clickedPos + 1).children('div').children('div').children('span').text(tempDuration)
+  $('.' + clickedList).children().eq(clickedPos + 1).children('img').attr('src', tempImg)
 
-  function changePosUp(data) {
-    //get postion of div clicked
-    // $(data).parent().parent().parent().hasClass('active')
-    var clickedPos = $(data).parent().parent().parent().index()
-    if (clickedPos !== 0) {
-    var clickedList = $(data).parent().parent().parent().parent().attr('class')    
+  $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('p').text(tempPreArtist)
+  $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('h3').text(tempPreTitle)
+  $('.' + clickedList).children().eq(clickedPos).children('div').children('div').children('span').text(tempPreDuration)
+  $('.' + clickedList).children().eq(clickedPos).children('img').attr('src', tempPreImg)
+
+}
+
+function swapArrayListVid(a, b) {
+  var temp = listVid[a];
+  listVid[a] = listVid[b];
+  listVid[b] = temp;
+};
+
+function changePosUp(data) {
+  //get postion of div clicked
+  // $(data).parent().parent().parent().hasClass('active')
+  var clickedPos = $(data).parent().parent().parent().index()
+  if (clickedPos !== 0) {
+    var clickedList = $(data).parent().parent().parent().parent().attr('class')
     swapUpDOMListVid(clickedPos, clickedList)
     swapArrayListVid(clickedPos, clickedPos - 1)
-      if ($(data).parent().parent().parent().hasClass('active')) {
-        posVid--
-      }
+    if ($(data).parent().parent().parent().hasClass('active')) {
+      posVid--
     }
   }
+}
 
-  function changePosDown(data) {
-    // var posVid = posVid + 1
-    //get postion of div clicked
-    var clickedPos = $(data).parent().parent().parent().index()
-    if (clickedPos !== $('.' + clickedList).children().length - 1) {
+function changePosDown(data) {
+  // var posVid = posVid + 1
+  //get postion of div clicked
+  var clickedPos = $(data).parent().parent().parent().index()
+  if (clickedPos !== $('.' + clickedList).children().length - 1) {
     var clickedList = $(data).parent().parent().parent().parent().attr('class')
     swapDownDOMListVid(clickedPos, clickedList)
     swapArrayListVid(clickedPos, clickedPos + 1)
-      if ($(data).parent().parent().parent().hasClass('active')) {
-        posVid++
-      }
+    if ($(data).parent().parent().parent().hasClass('active')) {
+      posVid++
     }
   }
+}
 
-  //* Space button to start stop song
-  function spaceKeyDown() {
-    document.onkeydown = function (e) {
-      if (e.keyCode == 32) {
-        changeStatusPlay()
-      }
-    };
-  }
-  spaceKeyDown()
-
-  //TODO nếu như còn bài cuối thì remove hết
-  //TODO error with postvid when remove vid
-  function deleteSong(data) {
-    var clickedPos = $(data).parent().parent().parent().index()
-    console.log(clickedPos);
-    var songTitle = $('#song-title').text()
-    //check xem co dang xoa bai dang play khong
-    if ($(data).parent().parent().children().children('h3').text() == songTitle) {
-      // console.log($(data).parent().parent().parent().parent().children());
-      $(data).parent().parent().parent().parent().children().eq(clickedPos + 1).click()
-      $(data).parent().parent().parent().remove()
-      removeSongInList(data)
-    } else {
-      $(data).parent().parent().parent().remove()
-      removeSongInList(data)
-
+//* Space button to start stop song
+function spaceKeyDown() {
+  document.onkeydown = function (e) {
+    if (e.keyCode == 32) {
+      changeStatusPlay()
     }
+  };
+}
+spaceKeyDown()
 
-    // $(data).parent().parent().parent().remove()
+//TODO nếu như còn bài cuối thì remove hết
+//TODO error with postvid when remove vid
+function deleteSong(data) {
+  var clickedPos = $(data).parent().parent().parent().index()
+  console.log(clickedPos);
+  var songTitle = $('#song-title').text()
+  //check xem co dang xoa bai dang play khong
+  if ($(data).parent().parent().children().children('h3').text() == songTitle) {
+    // console.log($(data).parent().parent().parent().parent().children());
+    $(data).parent().parent().parent().parent().children().eq(clickedPos + 1).click()
+    $(data).parent().parent().parent().remove()
+    removeSongInList(data)
+  } else {
+    $(data).parent().parent().parent().remove()
+    removeSongInList(data)
+
   }
 
-  function removeSongInList(data) {
-    var posToRemove = listVid.indexOf(listVid.find(({ title }) => title === $(data).parent().parent().children().children('h3').text()))
-    listVid.splice(posToRemove, 1);
-  }
+  // $(data).parent().parent().parent().remove()
+}
+
+function removeSongInList(data) {
+  var posToRemove = listVid.indexOf(listVid.find(({ title }) => title === $(data).parent().parent().children().children('h3').text()))
+  listVid.splice(posToRemove, 1);
+}
 
 //TODO fix onclick when search
