@@ -68,9 +68,21 @@ body {
   }
 }
 
+.current-playing-song-controls .song-name {
+  width: 35%;
+}
+
+.current-playing-song-controls .song-name #song-title{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+
 .music-player-container .music-player-content main .music-player-sidebar .category {
   position: relative;
   padding: 20px;
+  overflow: hidden;
 }
 
 .music-player-container .music-player-content main .music-player-sidebar .category svg {
@@ -642,7 +654,7 @@ a {
   border-radius: 8px;
   outline: none;
   transition: background 450ms ease-in;
-  -webkit-appearance: none;
+  appearance: none;
 }
 
 /* .music-player-container .music-player-content .music-player .current-playing-time::before {
@@ -735,7 +747,7 @@ a {
   height: 7px;
   /* outline: none; */
   transition: background 450ms ease-in;
-  -webkit-appearance: none;
+  appearance: none;
 }
 
 
@@ -817,7 +829,7 @@ button {
   color: #fff;
 }
 
-@-webkit-keyframes "wavesAnimate" {
+@-webkit-keyframes wavesAnimate {
   50% {
     height: 20%;
   }
@@ -827,7 +839,7 @@ button {
   }
 }
 
-@keyframes "wavesAnimate" {
+@keyframes wavesAnimate {
   50% {
     height: 20%;
   }
@@ -903,7 +915,7 @@ button {
   animation-delay: 0s;
 }
 
-@-webkit-keyframes "bell" {
+@-webkit-keyframes bell {
   0% {
     transform: rotate(0);
   }
@@ -929,7 +941,7 @@ button {
   }
 }
 
-@keyframes "bell" {
+@keyframes bell {
   0% {
     transform: rotate(0);
   }
@@ -955,7 +967,7 @@ button {
   }
 }
 
-@-webkit-keyframes "rad" {
+@-webkit-keyframes rad {
   0% {
     transform: translateX(0);
   }
@@ -981,7 +993,7 @@ button {
   }
 }
 
-@keyframes "rad" {
+@keyframes rad {
   0% {
     transform: translateX(0);
   }
@@ -1007,7 +1019,7 @@ button {
   }
 }
 
-@-webkit-keyframes "zoom" {
+@-webkit-keyframes zoom {
   0% {
     opacity: 0;
     transform: scale(0);
@@ -1031,7 +1043,7 @@ button {
   }
 }
 
-@keyframes "zoom" {
+@keyframes zoom {
   0% {
     opacity: 0;
     transform: scale(0);
@@ -1055,7 +1067,7 @@ button {
   }
 }
 
-@-webkit-keyframes "moon-moving" {
+@-webkit-keyframes moon-moving {
   0% {
     transform: translate(-200%, 600%);
   }
@@ -1065,7 +1077,7 @@ button {
   }
 }
 
-@keyframes "moon-moving" {
+@keyframes moon-moving {
   0% {
     transform: translate(-200%, 600%);
   }
