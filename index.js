@@ -1,6 +1,6 @@
 function renderItem(title, artist, id, duration) {
   return `<div class="song-list-item">
-                  <img src='https://i3.ytimg.com/vi/${id}/mqdefault.jpg' class="thumbnail" loading="lazy">
+                  <img src='https://i3.ytimg.com/vi/${id}/mqdefault.jpg' alt="thumbnail" class="thumbnail" loading="lazy">
                   <div class="song-info">
                     <div class="song-name">
                       <h3>${title}</h3>
@@ -30,7 +30,7 @@ function renderItem(title, artist, id, duration) {
 
 function renderItemToSwap(title, artist, image, duration) {
   return `
-                  <img src='${image}' class="thumbnail" loading="lazy">
+                  <img src='${image}' class="thumbnail" alt="thumbnail" loading="lazy">
                   <div class="song-info">
                     <div class="song-name">
                       <h3>${title}</h3>
